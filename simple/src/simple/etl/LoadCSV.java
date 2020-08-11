@@ -59,6 +59,9 @@ public class LoadCSV {
 					};
 					
 					line  = strb.toString().trim();
+					
+					//if(f.getName().contains("sc_info")) {System.out.println(line);}
+					
 					bw2 = new BufferedWriter(new FileWriter(f));
 					bw2.write(line);
 					strb.setLength(0);
@@ -90,8 +93,8 @@ public class LoadCSV {
 //  50만건 이상 없이 수행됨
 // 100만건 돌렸는데 마지막 파일 글자 깨짐
 // -가설1: 파일 목록 출력하는 print 메소드를 실행해서 깨졌다 -> 여전히 깨짐
-// - 
-
-
+// -가설2: 한 파일에 담긴 데이터가 만건 이상이라 발생했다(1.5만) 9천건으로 줄여서 테스트 -> 여전히 깨짐...
+// -데이터 양의 문제가 맞는지 3건의 테이터만으로 테스트 -> 성공, 만건 -> 성공...
+// - 만건 성공데이터 4배로 돌려봄(4만건) -> 로우 길이의 문제!
 
 
