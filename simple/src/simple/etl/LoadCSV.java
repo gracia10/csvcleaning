@@ -14,20 +14,16 @@ public class LoadCSV {
 
 	public static void main(String[] args) {
 
-//		File file = new File("C:\\sampledb\\psql");
 		File file = new File("C:\\sampledb\\testCSV");
-		
 		List<File> dirs = new ArrayList<>();
+
+		for(File f: file.listFiles()) {
+			if(f.isDirectory()) dirs.add(f);
+		}
 		
-		trim(file.listFiles());
-		
-//		for(File f: file.listFiles()) {
-//			if(f.isDirectory()) dirs.add(f);
-//		}
-//		
-//		for(File f: dirs) {
-//			print(f.listFiles());
-//		}
+		for(File f: dirs) {
+			trim(f.listFiles());
+		}
 	}
 
 	
@@ -42,17 +38,20 @@ public class LoadCSV {
 		}
 	}
 	
-
 	public static void trim(File[] files) {
+		
+		System.out.println("시작");
 		
 		String line = "";
 		StringBuilder strb = new StringBuilder();
+		BufferedWriter bw2 = null;
+		
 		
 		for(File f: files) {
 			if(f.isFile()) {
 				try (
 						BufferedReader br = new BufferedReader(new FileReader(f));
-						BufferedWriter bw = new BufferedWriter(new FileWriter(f,true))
+						BufferedWriter bw = new BufferedWriter(new FileWriter(f,true));
 					){
 					
 					while((line = br.readLine())!= null) {
@@ -60,29 +59,38 @@ public class LoadCSV {
 					};
 					
 					line  = strb.toString().trim();
-					System.out.println(line);
-					bw.write(line);
+					bw2 = new BufferedWriter(new FileWriter(f));
+					bw2.write(line);
 					strb.setLength(0);
 					
 				} catch (FileNotFoundException e) {
 					e.printStackTrace();
 				} catch (IOException e1) {
 					e1.printStackTrace();
+				}finally {
+					try {
+						bw2.close();
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
 				}
 				
 			}
 		}
+		
+		System.out.println("끝");
 	}
 	
 }
 
 
-// 기존값 읽음 정제한 값 생성
-// 기존값 덮어쓰기 불가
-// temp 값저장
-// java empty
-
-
+//  20건 이상 없이 수행됨
+//  2만건 이상 없이 수행됨
+//  10만건 이상 없이 수행됨
+//  50만건 이상 없이 수행됨
+// 100만건 돌렸는데 마지막 파일 글자 깨짐
+// -가설1: 파일 목록 출력하는 print 메소드를 실행해서 깨졌다 -> 여전히 깨짐
+// - 
 
 
 
