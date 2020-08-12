@@ -23,7 +23,6 @@ public class LoadCSV {
 	private static final String DEFAULTPATH = "C:\\Dev\\SampleData\\testCSV\\ansi.csv";
 	
 	public static void main(String[] args) {
-//		print(getFile().listFiles());
 		getCharset();
 	}
 	
@@ -36,7 +35,21 @@ public class LoadCSV {
 			charsetDetector.setText(arr);
 			charsetDetector.enableInputFilter(true);
 			CharsetMatch cm = charsetDetector.detect();
+			
 			System.out.println(cm.getName());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void getMimeType(File file) {
+		String mimeType;
+		Tika tika = new Tika();
+		
+		try {
+			mimeType = tika.detect(file);
+			System.out.println(mimeType);
 			
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -54,14 +67,15 @@ public class LoadCSV {
 			
 			// 파일 본문
 			String contents = tika.parseToString(reader, metadata);
-			
 			System.out.println(contents);
-			
-			// 파일 메타데이터 
-			// X-Parsed-By: org.apache.tika.parser.DefaultParser
-			// Content-Encoding: UTF-8
-			// csv:delimiter: comma
-			// Content-Type: text/csv; charset=UTF-8; delimiter=comma
+
+			/*
+			 * 파일 메타데이터 X-Parsed-By: org.apache.tika.parser.DefaultParser
+			 * Content-Encoding: UTF-8
+			 * csv:delimiter: comma
+			 * Content-Type: text/csv; charset=UTF-8; delimiter=comma
+			 */
+			 
 	        for(String name : metadata.names()) {
 	            System.out.println(name + ": " + metadata.get(name));
 	        }
@@ -69,20 +83,6 @@ public class LoadCSV {
 		} catch (IOException | TikaException e) {
 			e.printStackTrace();
 		}
-		
-		
-		
-		
-//		String mimeType;
-//		
-//		try {
-//			for(File file: files) {
-//					mimeType = tika.detect(file);
-//					System.out.println(mimeType);
-//			}
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
 		
 	}
 
