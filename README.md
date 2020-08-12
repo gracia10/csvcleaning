@@ -1,6 +1,6 @@
 # java csv cleaning
 
-- trim (new line remove)
+- trim (purpose new line remove)
 - detect charset using apache tika
 
 * Postgresql, Mysql
@@ -13,3 +13,6 @@ http://opencsv.sourceforge.net/
 
 - juniversalchardet  
 https://dev.re.kr/83  
+
+- tika  
+https://issues.apache.org/jira/browse/TIKA-1262  
