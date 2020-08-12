@@ -1,6 +1,6 @@
 # java csv cleaning
 
-- puerpose :: trim (new line remove)
+- trim (new line remove)
 
 
 * Postgresql, Mysql
