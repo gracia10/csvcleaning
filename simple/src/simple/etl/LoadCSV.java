@@ -12,20 +12,39 @@ import java.util.List;
 
 public class LoadCSV {
 
+	private static final String DEFAULTPATH = "C:\\Dev\\SampleData";
+	
 	public static void main(String[] args) {
+		
+		
+		File file = getFile();
+		print(file.listFiles());
+		
+		
+	}
 
-		File file = new File("C:\\sampledb\\testCSV");
+	public static File getFile() {
+		return getFile(DEFAULTPATH);
+	}
+	
+	public static File getFile(String path) {
+		return new File(path);
+	}
+	
+	public static void cleaning(File file) {
 		List<File> dirs = new ArrayList<>();
 
 		for(File f: file.listFiles()) {
-			if(f.isDirectory()) dirs.add(f);
+			if(f.isDirectory()) {
+				dirs.add(f);
+			}
 		}
 		
 		for(File f: dirs) {
 			trim(f.listFiles());
 		}
-	}
-
+		
+	} 
 	
 	public static void print(File[] files) {
 		for(File f: files) {
@@ -98,5 +117,6 @@ public class LoadCSV {
 // - 만건 성공데이터 4배로 돌려봄(4만건) -> 로우 길이의 문제!
 
 // -가설3: 로우 길이와 상관없이 인코딩 차이의 문제 (문제파일 모드 ANSI 타입)
+
 
 
