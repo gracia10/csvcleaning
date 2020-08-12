@@ -7,19 +7,64 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.tika.Tika;
+import org.apache.tika.exception.TikaException;
+import org.apache.tika.io.TikaInputStream;
+import org.apache.tika.metadata.Metadata;
+
 public class LoadCSV {
 
-	private static final String DEFAULTPATH = "C:\\Dev\\SampleData";
+	private static final String DEFAULTPATH = "C:\\Dev\\SampleData\\testCSV\\ansi.csv";
 	
 	public static void main(String[] args) {
+//		print(getFile().listFiles());
+		getMetadata();
+	}
+	
+	public static void getMetadata() {
+		
+		Tika tika = new Tika();
+		Metadata metadata = new Metadata();
+
+		try (TikaInputStream reader = TikaInputStream.get(Paths.get(DEFAULTPATH))){
+			
+			
+			// 파일 본문
+			String contents = tika.parseToString(reader, metadata);
+			
+			System.out.println(contents);
+			
+			// 파일 메타데이터 
+			// X-Parsed-By: org.apache.tika.parser.DefaultParser
+			// Content-Encoding: UTF-8
+			// csv:delimiter: comma
+			// Content-Type: text/csv; charset=UTF-8; delimiter=comma
+	        for(String name : metadata.names()) {
+	            System.out.println(name + ": " + metadata.get(name));
+	        }
+			
+		} catch (IOException | TikaException e) {
+			e.printStackTrace();
+		}
 		
 		
-		File file = getFile();
-		print(file.listFiles());
 		
+		
+//		String mimeType;
+//		
+//		try {
+//			for(File file: files) {
+//					mimeType = tika.detect(file);
+//					System.out.println(mimeType);
+//			}
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 	}
 
