@@ -7,7 +7,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
+import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,15 +16,33 @@ import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
 import org.apache.tika.io.TikaInputStream;
 import org.apache.tika.metadata.Metadata;
+import org.apache.tika.parser.txt.CharsetDetector;
+import org.apache.tika.parser.txt.CharsetMatch;
 
 public class LoadCSV {
-
 	private static final String DEFAULTPATH = "C:\\Dev\\SampleData\\testCSV\\ansi.csv";
 	
 	public static void main(String[] args) {
 //		print(getFile().listFiles());
-		getMetadata();
+		getCharset();
 	}
+	
+	
+	public static void getCharset() {
+		try {
+			byte[] arr = Files.readAllBytes(Paths.get(DEFAULTPATH));
+			
+			CharsetDetector charsetDetector = new CharsetDetector();
+			charsetDetector.setText(arr);
+			charsetDetector.enableInputFilter(true);
+			CharsetMatch cm = charsetDetector.detect();
+			System.out.println(cm.getName());
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	
 	public static void getMetadata() {
 		
@@ -160,7 +178,6 @@ public class LoadCSV {
 // -가설2: 한 파일에 담긴 데이터가 만건 이상이라 발생했다(1.5만) 9천건으로 줄여서 테스트 -> 여전히 깨짐...
 // -데이터 양의 문제가 맞는지 3건의 테이터만으로 테스트 -> 성공, 만건 -> 성공...
 // - 만건 성공데이터 4배로 돌려봄(4만건) -> 로우 길이의 문제!
-
 // -가설3: 로우 길이와 상관없이 인코딩 차이의 문제 (문제파일 모드 ANSI 타입)
 
 
