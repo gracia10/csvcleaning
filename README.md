@@ -1,7 +1,10 @@
-# java csv 전처리
+# java csv cleaning
 
-- Postgresql, Mysql
-- (now) only java no lib
+- puerpose :: trim (new line remove)
+
+
+* Postgresql, Mysql
+* (now) only java no lib
 
 soon..
 
