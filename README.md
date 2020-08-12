@@ -11,5 +11,5 @@ soon..
 https://commons.apache.org/proper/commons-csv/  
 http://opencsv.sourceforge.net/  
 
-- juniversalchardet 
+- juniversalchardet  
 https://dev.re.kr/83  
