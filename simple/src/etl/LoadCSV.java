@@ -1,92 +1,16 @@
 package simple.src.etl;
 
-import org.apache.tika.Tika;
-import org.apache.tika.exception.TikaException;
-import org.apache.tika.io.TikaInputStream;
-import org.apache.tika.metadata.Metadata;
-import org.apache.tika.parser.txt.CharsetDetector;
-import org.apache.tika.parser.txt.CharsetMatch;
-
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
 public class LoadCSV {
-	private static final String DEFAULTPATH = "C:\\Dev\\SampleData\\testCSV\\ansi.csv";
-	
+
 	public static void main(String[] args) {
 		System.out.println("hello world");
+
 	}
 
-	public static void getCharset() {
-		try {
-			byte[] arr = Files.readAllBytes(Paths.get(DEFAULTPATH));
-			
-			CharsetDetector charsetDetector = new CharsetDetector();
-			charsetDetector.setText(arr);
-			charsetDetector.enableInputFilter(true);
-			CharsetMatch cm = charsetDetector.detect();
-			
-			System.out.println(cm.getName());
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public static void getMimeType(File file) {
-		String mimeType;
-		Tika tika = new Tika();
-		
-		try {
-			mimeType = tika.detect(file);
-			System.out.println(mimeType);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-	
-	
-	public static void getMetadata() {
-		
-		Tika tika = new Tika();
-		Metadata metadata = new Metadata();
-
-		try (TikaInputStream reader = TikaInputStream.get(Paths.get(DEFAULTPATH))){
-			
-			
-			// 파일 본문
-			String contents = tika.parseToString(reader, metadata);
-			System.out.println(contents);
-
-			/*
-			 * 파일 메타데이터 X-Parsed-By: org.apache.tika.parser.DefaultParser
-			 * Content-Encoding: UTF-8
-			 * csv:delimiter: comma
-			 * Content-Type: text/csv; charset=UTF-8; delimiter=comma
-			 */
-			 
-	        for(String name : metadata.names()) {
-	            System.out.println(name + ": " + metadata.get(name));
-	        }
-			
-		} catch (IOException | TikaException e) {
-			e.printStackTrace();
-		}
-		
-	}
-
-	public static File getFile() {
-		return getFile(DEFAULTPATH);
-	}
-	
-	public static File getFile(String path) {
-		return new File(path);
-	}
-	
 	public static void cleaning(File file) {
 		List<File> dirs = new ArrayList<>();
 
@@ -102,7 +26,7 @@ public class LoadCSV {
 		
 	} 
 	
-	public static void print(File[] files) {
+	public static void printFileOrDir(File[] files) {
 		for(File f: files) {
 			if(f.isDirectory()) {
 				System.out.println("This is Dir: "+f.getAbsolutePath());
@@ -134,8 +58,6 @@ public class LoadCSV {
 					};
 					
 					line  = strb.toString().trim();
-					
-					//if(f.getName().contains("sc_info")) {System.out.println(line);}
 					
 					bw2 = new BufferedWriter(new FileWriter(f));
 					bw2.write(line);
