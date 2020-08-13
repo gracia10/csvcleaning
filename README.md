@@ -4,10 +4,10 @@
 - trim (purpose new line remove)
 - detect charset using apache tika
 
-soon..
+soon..  
 https://commons.apache.org/proper/commons-csv/  
 http://opencsv.sourceforge.net/  
-https://stackabuse.com/reading-and-writing-csvs-in-java/
+https://stackabuse.com/reading-and-writing-csvs-in-java/  
 
 - juniversalchardet  
 https://dev.re.kr/83  
