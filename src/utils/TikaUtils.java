@@ -1,4 +1,4 @@
-package simple.src.etl;
+package src.utils;
 
 import org.apache.tika.Tika;
 import org.apache.tika.exception.TikaException;
@@ -16,19 +16,21 @@ public class TikaUtils {
 
     private static Tika tika = new Tika();
 
-    public static void printCharset(String path) {
+    public static String getCharset(String path) {
+        String charset = null;
+
         try {
             byte[] arr = Files.readAllBytes(Paths.get(path));
-
             CharsetDetector charsetDetector = new CharsetDetector();
             charsetDetector.setText(arr);
             charsetDetector.enableInputFilter(true);
             CharsetMatch cm = charsetDetector.detect();
-
-            System.out.println(cm.getName());
+            charset = cm.getName();
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return charset;
     }
 
     public static void printMimeType(File file) {
